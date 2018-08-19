@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>RealTimeApp</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Real Time Application</h1>
+        <div id="circle">
+        </div>
+        <button id="blue">blue</button>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io();
+            var cir = document.getElementById('blue');
+            var c = document.getElementById('circle');
+            cir.addEventListener('click', () => {
+                socket.emit('color', 'red');
+                cir.style.display = 'none';
+                c.style.backgroundColor = 'green';
+            });
+            
+            socket.on('upd', (mupd) => {
+                c.style.backgroundColor = mupd;
+                  cir.style.display = 'block';
+            });
+
+            socket.on('connect', () => {
+                console.log('user Connected');
+            });
+           
+        </script>
+    </body>
+</html>
